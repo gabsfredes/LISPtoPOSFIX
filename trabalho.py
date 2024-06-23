@@ -72,7 +72,7 @@ def t_error(t):
 lexer = lex.lex()
 
 # Recebe input de arquivo txt e coloca no lexer.input
-arquivo = open("input.txt", "r")
+arquivo = open("LISPtoPOSFIX/input.txt", "r")
 lexer.input(arquivo.read())
 arquivo.close()
 

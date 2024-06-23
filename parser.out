@@ -1,0 +1,271 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expressao
+Rule 1     expressao -> expressao MAIS termo
+Rule 2     expressao -> expressao MENOS termo
+Rule 3     expressao -> termo
+Rule 4     termo -> termo VEZES fator
+Rule 5     termo -> termo DIVIDIR fator
+Rule 6     termo -> fator
+Rule 7     fator -> NUMERO
+Rule 8     fator -> ID
+Rule 9     fator -> ABRE_PAREN expressao FECHA_PAREN
+
+Terminals, with rules where they appear
+
+ABRE_PAREN           : 9
+DIVIDIR              : 5
+FECHA_PAREN          : 9
+ID                   : 8
+MAIS                 : 1
+MENOS                : 2
+NUMERO               : 7
+VEZES                : 4
+error                : 
+
+Nonterminals, with rules where they appear
+
+expressao            : 1 2 9 0
+fator                : 4 5 6
+termo                : 1 2 3 4 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expressao
+    (1) expressao -> . expressao MAIS termo
+    (2) expressao -> . expressao MENOS termo
+    (3) expressao -> . termo
+    (4) termo -> . termo VEZES fator
+    (5) termo -> . termo DIVIDIR fator
+    (6) termo -> . fator
+    (7) fator -> . NUMERO
+    (8) fator -> . ID
+    (9) fator -> . ABRE_PAREN expressao FECHA_PAREN
+
+    NUMERO          shift and go to state 4
+    ID              shift and go to state 5
+    ABRE_PAREN      shift and go to state 6
+
+    expressao                      shift and go to state 1
+    termo                          shift and go to state 2
+    fator                          shift and go to state 3
+
+state 1
+
+    (0) S' -> expressao .
+    (1) expressao -> expressao . MAIS termo
+    (2) expressao -> expressao . MENOS termo
+
+    MAIS            shift and go to state 7
+    MENOS           shift and go to state 8
+
+
+state 2
+
+    (3) expressao -> termo .
+    (4) termo -> termo . VEZES fator
+    (5) termo -> termo . DIVIDIR fator
+
+    MAIS            reduce using rule 3 (expressao -> termo .)
+    MENOS           reduce using rule 3 (expressao -> termo .)
+    $end            reduce using rule 3 (expressao -> termo .)
+    FECHA_PAREN     reduce using rule 3 (expressao -> termo .)
+    VEZES           shift and go to state 9
+    DIVIDIR         shift and go to state 10
+
+
+state 3
+
+    (6) termo -> fator .
+
+    VEZES           reduce using rule 6 (termo -> fator .)
+    DIVIDIR         reduce using rule 6 (termo -> fator .)
+    MAIS            reduce using rule 6 (termo -> fator .)
+    MENOS           reduce using rule 6 (termo -> fator .)
+    $end            reduce using rule 6 (termo -> fator .)
+    FECHA_PAREN     reduce using rule 6 (termo -> fator .)
+
+
+state 4
+
+    (7) fator -> NUMERO .
+
+    VEZES           reduce using rule 7 (fator -> NUMERO .)
+    DIVIDIR         reduce using rule 7 (fator -> NUMERO .)
+    MAIS            reduce using rule 7 (fator -> NUMERO .)
+    MENOS           reduce using rule 7 (fator -> NUMERO .)
+    $end            reduce using rule 7 (fator -> NUMERO .)
+    FECHA_PAREN     reduce using rule 7 (fator -> NUMERO .)
+
+
+state 5
+
+    (8) fator -> ID .
+
+    VEZES           reduce using rule 8 (fator -> ID .)
+    DIVIDIR         reduce using rule 8 (fator -> ID .)
+    MAIS            reduce using rule 8 (fator -> ID .)
+    MENOS           reduce using rule 8 (fator -> ID .)
+    $end            reduce using rule 8 (fator -> ID .)
+    FECHA_PAREN     reduce using rule 8 (fator -> ID .)
+
+
+state 6
+
+    (9) fator -> ABRE_PAREN . expressao FECHA_PAREN
+    (1) expressao -> . expressao MAIS termo
+    (2) expressao -> . expressao MENOS termo
+    (3) expressao -> . termo
+    (4) termo -> . termo VEZES fator
+    (5) termo -> . termo DIVIDIR fator
+    (6) termo -> . fator
+    (7) fator -> . NUMERO
+    (8) fator -> . ID
+    (9) fator -> . ABRE_PAREN expressao FECHA_PAREN
+
+    NUMERO          shift and go to state 4
+    ID              shift and go to state 5
+    ABRE_PAREN      shift and go to state 6
+
+    expressao                      shift and go to state 11
+    termo                          shift and go to state 2
+    fator                          shift and go to state 3
+
+state 7
+
+    (1) expressao -> expressao MAIS . termo
+    (4) termo -> . termo VEZES fator
+    (5) termo -> . termo DIVIDIR fator
+    (6) termo -> . fator
+    (7) fator -> . NUMERO
+    (8) fator -> . ID
+    (9) fator -> . ABRE_PAREN expressao FECHA_PAREN
+
+    NUMERO          shift and go to state 4
+    ID              shift and go to state 5
+    ABRE_PAREN      shift and go to state 6
+
+    termo                          shift and go to state 12
+    fator                          shift and go to state 3
+
+state 8
+
+    (2) expressao -> expressao MENOS . termo
+    (4) termo -> . termo VEZES fator
+    (5) termo -> . termo DIVIDIR fator
+    (6) termo -> . fator
+    (7) fator -> . NUMERO
+    (8) fator -> . ID
+    (9) fator -> . ABRE_PAREN expressao FECHA_PAREN
+
+    NUMERO          shift and go to state 4
+    ID              shift and go to state 5
+    ABRE_PAREN      shift and go to state 6
+
+    termo                          shift and go to state 13
+    fator                          shift and go to state 3
+
+state 9
+
+    (4) termo -> termo VEZES . fator
+    (7) fator -> . NUMERO
+    (8) fator -> . ID
+    (9) fator -> . ABRE_PAREN expressao FECHA_PAREN
+
+    NUMERO          shift and go to state 4
+    ID              shift and go to state 5
+    ABRE_PAREN      shift and go to state 6
+
+    fator                          shift and go to state 14
+
+state 10
+
+    (5) termo -> termo DIVIDIR . fator
+    (7) fator -> . NUMERO
+    (8) fator -> . ID
+    (9) fator -> . ABRE_PAREN expressao FECHA_PAREN
+
+    NUMERO          shift and go to state 4
+    ID              shift and go to state 5
+    ABRE_PAREN      shift and go to state 6
+
+    fator                          shift and go to state 15
+
+state 11
+
+    (9) fator -> ABRE_PAREN expressao . FECHA_PAREN
+    (1) expressao -> expressao . MAIS termo
+    (2) expressao -> expressao . MENOS termo
+
+    FECHA_PAREN     shift and go to state 16
+    MAIS            shift and go to state 7
+    MENOS           shift and go to state 8
+
+
+state 12
+
+    (1) expressao -> expressao MAIS termo .
+    (4) termo -> termo . VEZES fator
+    (5) termo -> termo . DIVIDIR fator
+
+    MAIS            reduce using rule 1 (expressao -> expressao MAIS termo .)
+    MENOS           reduce using rule 1 (expressao -> expressao MAIS termo .)
+    $end            reduce using rule 1 (expressao -> expressao MAIS termo .)
+    FECHA_PAREN     reduce using rule 1 (expressao -> expressao MAIS termo .)
+    VEZES           shift and go to state 9
+    DIVIDIR         shift and go to state 10
+
+
+state 13
+
+    (2) expressao -> expressao MENOS termo .
+    (4) termo -> termo . VEZES fator
+    (5) termo -> termo . DIVIDIR fator
+
+    MAIS            reduce using rule 2 (expressao -> expressao MENOS termo .)
+    MENOS           reduce using rule 2 (expressao -> expressao MENOS termo .)
+    $end            reduce using rule 2 (expressao -> expressao MENOS termo .)
+    FECHA_PAREN     reduce using rule 2 (expressao -> expressao MENOS termo .)
+    VEZES           shift and go to state 9
+    DIVIDIR         shift and go to state 10
+
+
+state 14
+
+    (4) termo -> termo VEZES fator .
+
+    VEZES           reduce using rule 4 (termo -> termo VEZES fator .)
+    DIVIDIR         reduce using rule 4 (termo -> termo VEZES fator .)
+    MAIS            reduce using rule 4 (termo -> termo VEZES fator .)
+    MENOS           reduce using rule 4 (termo -> termo VEZES fator .)
+    $end            reduce using rule 4 (termo -> termo VEZES fator .)
+    FECHA_PAREN     reduce using rule 4 (termo -> termo VEZES fator .)
+
+
+state 15
+
+    (5) termo -> termo DIVIDIR fator .
+
+    VEZES           reduce using rule 5 (termo -> termo DIVIDIR fator .)
+    DIVIDIR         reduce using rule 5 (termo -> termo DIVIDIR fator .)
+    MAIS            reduce using rule 5 (termo -> termo DIVIDIR fator .)
+    MENOS           reduce using rule 5 (termo -> termo DIVIDIR fator .)
+    $end            reduce using rule 5 (termo -> termo DIVIDIR fator .)
+    FECHA_PAREN     reduce using rule 5 (termo -> termo DIVIDIR fator .)
+
+
+state 16
+
+    (9) fator -> ABRE_PAREN expressao FECHA_PAREN .
+
+    VEZES           reduce using rule 9 (fator -> ABRE_PAREN expressao FECHA_PAREN .)
+    DIVIDIR         reduce using rule 9 (fator -> ABRE_PAREN expressao FECHA_PAREN .)
+    MAIS            reduce using rule 9 (fator -> ABRE_PAREN expressao FECHA_PAREN .)
+    MENOS           reduce using rule 9 (fator -> ABRE_PAREN expressao FECHA_PAREN .)
+    $end            reduce using rule 9 (fator -> ABRE_PAREN expressao FECHA_PAREN .)
+    FECHA_PAREN     reduce using rule 9 (fator -> ABRE_PAREN expressao FECHA_PAREN .)
+
