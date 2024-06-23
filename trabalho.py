@@ -13,6 +13,7 @@ import ply.lex as lex
 # Tokenizer
 # Lista com nome dos tokens
 tokens = (
+    "ID", 
     "NUMERO",
     "MAIS",
     "MENOS",
@@ -39,6 +40,10 @@ def t_NUMERO(t):
     t.value = int(t.value)
     return t
 
+# Função para tratar ID
+def t_ID(t):
+    r"[a-zA-Z_][a-zA-Z0-9_]*" # Letra seguida de letras, números ou underline
+    return t
 
 # Ignorar espaços em branco
 t_ignore = " \t"
