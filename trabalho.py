@@ -48,6 +48,10 @@ def t_ID(t):
 # Ignorar espaços em branco
 t_ignore = " \t"
 
+# Ignorar comentários
+def t_COMENTARIO(t):
+    r'\#.*'
+    pass
 
 # Numero da linha
 def t_newline(t):
@@ -63,7 +67,6 @@ def t_newline(t):
 def t_error(t):
     print("O caractere ilegal '%s' foi pulado" % t.value[0])
     t.lexer.skip(1)  # Pula o caractere ilegal
-
 
 # Construir o lexer
 lexer = lex.lex()
