@@ -84,7 +84,7 @@ def p_expression(p):
     # expression : term PLUS term
     #   p[0]     : p[1] p[2] p[3]
     # 
-    p[0] = ('op_binaria', p[3], p[1], p[2])
+    p[0] = ('op_binaria', p[2], p[1], p[3])
 
 def p_expression_term(p):
     '''
@@ -97,7 +97,7 @@ def p_term(p):
     term : VEZES factor factor
          | DIVIDIR factor factor
     '''
-    p[0] = ('op_binaria', p[1], p[3], p[2])
+    p[0] = ('op_binaria', p[2], p[1], p[3])
 
 def p_term_factor(p):
     '''
@@ -138,19 +138,17 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Parse an expression
-ast = parser.parse('(/ (* z(+ x y)) 2)')
+ast = parser.parse('(* (+ 1 2) (+ 3 4))')
 print(ast)
 
 def postfix_expression(node):
     if isinstance(node, tuple):
         if node[0] == 'op_binaria':
-            left_expr = postfix_expression(node[2])
+            left_expr = postfix_expression(node[1])
             right_expr = postfix_expression(node[3])
-            return f'{left_expr} {right_expr} {node[1]}'
-        elif node[0] == 'numero':
+            return f'{left_expr} {right_expr} {node[2]}'
+        elif node[0] == 'numero' or node[0] == 'id':
             return str(node[1])
-        elif node[0] == 'id':
-            return node[1]
     else:
         # Trata casos não cobertos, como números e identificadores diretamente
         return str(node)
