@@ -78,11 +78,9 @@ def p_expressao_id(p):
     "expressao : ID"
     p[0] = p[1]
 
-
 def p_expressao_numero(p):
     "expressao : NUMERO"
     p[0] = p[1]
-
 
 def p_expressao_mais(p):
     "expressao : ABRE_PAREN MAIS expressao expressao FECHA_PAREN"
@@ -103,16 +101,14 @@ def p_expressao_dividir(p):
     "expressao : ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN"
     p[0] = f"{p[3]} {p[4]} /"
     
-
-
 # Função de erro
 def p_error(p):
     print("Erro de sintaxe! %s" % p)
 
-
 # Construção do parser
 parser = yacc.yacc()
 
+# Função para converter expressão LISP para POSFIX
 def lisp_to_postfix(expression):
     return parser.parse(expression, lexer=lexer)
 
