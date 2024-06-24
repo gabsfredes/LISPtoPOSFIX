@@ -138,14 +138,14 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Parse an expression
-ast = parser.parse('(* (+ 1 2) (+ 3 4))')
+ast = parser.parse('( * z ( + x y ) ) ')
 print(ast)
 
 def postfix_expression(node):
     if isinstance(node, tuple):
         if node[0] == 'op_binaria':
-            left_expr = postfix_expression(node[1])
-            right_expr = postfix_expression(node[3])
+            left_expr = postfix_expression(node[3])
+            right_expr = postfix_expression(node[1])
             return f'{left_expr} {right_expr} {node[2]}'
         elif node[0] == 'numero' or node[0] == 'id':
             return str(node[1])
