@@ -1,4 +1,3 @@
-# Alfabeto = {id, n, +, −, ∗, /}
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -76,29 +75,35 @@ precedence = (
 # Definição da gramática (aqui é feita a conversão para notação posfixa)
 def p_expressao_id(p):
     "expressao : ID"
+    print(f"ID: {p[1]}")
     p[0] = p[1]
 
 def p_expressao_numero(p):
     "expressao : NUMERO"
+    print(f"NUMERO: {p[1]}")
     p[0] = p[1]
 
 def p_expressao_mais(p):
     "expressao : ABRE_PAREN MAIS expressao expressao FECHA_PAREN"
+    print(f"MAIS: {p[1:6]}")
     p[0] = f"{p[3]} {p[4]} +"
 
 
 def p_expressao_menos(p):
     "expressao : ABRE_PAREN MENOS expressao expressao FECHA_PAREN"
+    print(f"MENOS: {p[1:6]}")
     p[0] = f"{p[3]} {p[4]} -"
 
 
 def p_expressao_vezes(p):
     "expressao : ABRE_PAREN VEZES expressao expressao FECHA_PAREN"
+    print(f"VEZES: {p[1:6]}")
     p[0] = f"{p[3]} {p[4]} *"
 
 
 def p_expressao_dividir(p):
     "expressao : ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN"
+    print(f"DIVIDIR: {p[1:6]}")
     p[0] = f"{p[3]} {p[4]} /"
     
 # Função de erro

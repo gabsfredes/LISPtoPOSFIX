@@ -2,28 +2,467 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> expressao
-Rule 1     expressao -> ID
-Rule 2     expressao -> NUMERO
-Rule 3     expressao -> ABRE_PAREN MAIS expresao expressao FECHA_PAREN
-Rule 4     expressao -> ABRE_PAREN MENOS expressao expressao FECHA_PAREN
-Rule 5     expressao -> ABRE_PAREN VEZES expressao expressao FECHA_PAREN
-Rule 6     expressao -> ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN
+Rule 0     S' -> expression
+Rule 1     expression -> MAIS term term
+Rule 2     expression -> MENOS term term
+Rule 3     expression -> term
+Rule 4     term -> VEZES factor factor
+Rule 5     term -> DIVIDIR factor factor
+Rule 6     term -> factor
+Rule 7     factor -> NUMERO
+Rule 8     factor -> ID
+Rule 9     factor -> MAIS factor
+Rule 10    factor -> MENOS factor
+Rule 11    factor -> ABRE_PAREN expression FECHA_PAREN
 
 Terminals, with rules where they appear
 
-ABRE_PAREN           : 3 4 5 6
-DIVIDIR              : 6
-FECHA_PAREN          : 3 4 5 6
-ID                   : 1
-MAIS                 : 3
-MENOS                : 4
-NUMERO               : 2
-VEZES                : 5
+ABRE_PAREN           : 11
+DIVIDIR              : 5
+FECHA_PAREN          : 11
+ID                   : 8
+MAIS                 : 1 9
+MENOS                : 2 10
+NUMERO               : 7
+VEZES                : 4
 error                : 
 
 Nonterminals, with rules where they appear
 
-expresao             : 3
-expressao            : 3 4 4 5 5 6 6 0
+expression           : 11 0
+factor               : 4 4 5 5 6 9 10
+term                 : 1 1 2 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . MAIS term term
+    (2) expression -> . MENOS term term
+    (3) expression -> . term
+    (4) term -> . VEZES factor factor
+    (5) term -> . DIVIDIR factor factor
+    (6) term -> . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    MAIS            shift and go to state 2
+    MENOS           shift and go to state 4
+    VEZES           shift and go to state 5
+    DIVIDIR         shift and go to state 7
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    ABRE_PAREN      shift and go to state 10
+
+    expression                     shift and go to state 1
+    term                           shift and go to state 3
+    factor                         shift and go to state 6
+
+state 1
+
+    (0) S' -> expression .
+
+
+
+state 2
+
+    (1) expression -> MAIS . term term
+    (9) factor -> MAIS . factor
+    (4) term -> . VEZES factor factor
+    (5) term -> . DIVIDIR factor factor
+    (6) term -> . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    VEZES           shift and go to state 5
+    DIVIDIR         shift and go to state 7
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    term                           shift and go to state 12
+    factor                         shift and go to state 13
+
+state 3
+
+    (3) expression -> term .
+
+    $end            reduce using rule 3 (expression -> term .)
+    FECHA_PAREN     reduce using rule 3 (expression -> term .)
+
+
+state 4
+
+    (2) expression -> MENOS . term term
+    (10) factor -> MENOS . factor
+    (4) term -> . VEZES factor factor
+    (5) term -> . DIVIDIR factor factor
+    (6) term -> . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    VEZES           shift and go to state 5
+    DIVIDIR         shift and go to state 7
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 5
+
+    (4) term -> VEZES . factor factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    factor                         shift and go to state 17
+
+state 6
+
+    (6) term -> factor .
+
+    $end            reduce using rule 6 (term -> factor .)
+    FECHA_PAREN     reduce using rule 6 (term -> factor .)
+
+
+state 7
+
+    (5) term -> DIVIDIR . factor factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    factor                         shift and go to state 18
+
+state 8
+
+    (7) factor -> NUMERO .
+
+    $end            reduce using rule 7 (factor -> NUMERO .)
+    VEZES           reduce using rule 7 (factor -> NUMERO .)
+    DIVIDIR         reduce using rule 7 (factor -> NUMERO .)
+    NUMERO          reduce using rule 7 (factor -> NUMERO .)
+    ID              reduce using rule 7 (factor -> NUMERO .)
+    MAIS            reduce using rule 7 (factor -> NUMERO .)
+    MENOS           reduce using rule 7 (factor -> NUMERO .)
+    ABRE_PAREN      reduce using rule 7 (factor -> NUMERO .)
+    FECHA_PAREN     reduce using rule 7 (factor -> NUMERO .)
+
+
+state 9
+
+    (8) factor -> ID .
+
+    $end            reduce using rule 8 (factor -> ID .)
+    VEZES           reduce using rule 8 (factor -> ID .)
+    DIVIDIR         reduce using rule 8 (factor -> ID .)
+    NUMERO          reduce using rule 8 (factor -> ID .)
+    ID              reduce using rule 8 (factor -> ID .)
+    MAIS            reduce using rule 8 (factor -> ID .)
+    MENOS           reduce using rule 8 (factor -> ID .)
+    ABRE_PAREN      reduce using rule 8 (factor -> ID .)
+    FECHA_PAREN     reduce using rule 8 (factor -> ID .)
+
+
+state 10
+
+    (11) factor -> ABRE_PAREN . expression FECHA_PAREN
+    (1) expression -> . MAIS term term
+    (2) expression -> . MENOS term term
+    (3) expression -> . term
+    (4) term -> . VEZES factor factor
+    (5) term -> . DIVIDIR factor factor
+    (6) term -> . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    MAIS            shift and go to state 2
+    MENOS           shift and go to state 4
+    VEZES           shift and go to state 5
+    DIVIDIR         shift and go to state 7
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    ABRE_PAREN      shift and go to state 10
+
+    expression                     shift and go to state 19
+    term                           shift and go to state 3
+    factor                         shift and go to state 6
+
+state 11
+
+    (9) factor -> MAIS . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    factor                         shift and go to state 20
+
+state 12
+
+    (1) expression -> MAIS term . term
+    (4) term -> . VEZES factor factor
+    (5) term -> . DIVIDIR factor factor
+    (6) term -> . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    VEZES           shift and go to state 5
+    DIVIDIR         shift and go to state 7
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    term                           shift and go to state 21
+    factor                         shift and go to state 6
+
+state 13
+
+    (9) factor -> MAIS factor .
+    (6) term -> factor .
+
+    $end            reduce using rule 9 (factor -> MAIS factor .)
+    FECHA_PAREN     reduce using rule 9 (factor -> MAIS factor .)
+    VEZES           reduce using rule 6 (term -> factor .)
+    DIVIDIR         reduce using rule 6 (term -> factor .)
+    NUMERO          reduce using rule 6 (term -> factor .)
+    ID              reduce using rule 6 (term -> factor .)
+    MAIS            reduce using rule 6 (term -> factor .)
+    MENOS           reduce using rule 6 (term -> factor .)
+    ABRE_PAREN      reduce using rule 6 (term -> factor .)
+
+
+state 14
+
+    (10) factor -> MENOS . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    factor                         shift and go to state 22
+
+state 15
+
+    (2) expression -> MENOS term . term
+    (4) term -> . VEZES factor factor
+    (5) term -> . DIVIDIR factor factor
+    (6) term -> . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    VEZES           shift and go to state 5
+    DIVIDIR         shift and go to state 7
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    term                           shift and go to state 23
+    factor                         shift and go to state 6
+
+state 16
+
+    (10) factor -> MENOS factor .
+    (6) term -> factor .
+
+    $end            reduce using rule 10 (factor -> MENOS factor .)
+    FECHA_PAREN     reduce using rule 10 (factor -> MENOS factor .)
+    VEZES           reduce using rule 6 (term -> factor .)
+    DIVIDIR         reduce using rule 6 (term -> factor .)
+    NUMERO          reduce using rule 6 (term -> factor .)
+    ID              reduce using rule 6 (term -> factor .)
+    MAIS            reduce using rule 6 (term -> factor .)
+    MENOS           reduce using rule 6 (term -> factor .)
+    ABRE_PAREN      reduce using rule 6 (term -> factor .)
+
+
+state 17
+
+    (4) term -> VEZES factor . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    factor                         shift and go to state 24
+
+state 18
+
+    (5) term -> DIVIDIR factor . factor
+    (7) factor -> . NUMERO
+    (8) factor -> . ID
+    (9) factor -> . MAIS factor
+    (10) factor -> . MENOS factor
+    (11) factor -> . ABRE_PAREN expression FECHA_PAREN
+
+    NUMERO          shift and go to state 8
+    ID              shift and go to state 9
+    MAIS            shift and go to state 11
+    MENOS           shift and go to state 14
+    ABRE_PAREN      shift and go to state 10
+
+    factor                         shift and go to state 25
+
+state 19
+
+    (11) factor -> ABRE_PAREN expression . FECHA_PAREN
+
+    FECHA_PAREN     shift and go to state 26
+
+
+state 20
+
+    (9) factor -> MAIS factor .
+
+    $end            reduce using rule 9 (factor -> MAIS factor .)
+    VEZES           reduce using rule 9 (factor -> MAIS factor .)
+    DIVIDIR         reduce using rule 9 (factor -> MAIS factor .)
+    NUMERO          reduce using rule 9 (factor -> MAIS factor .)
+    ID              reduce using rule 9 (factor -> MAIS factor .)
+    MAIS            reduce using rule 9 (factor -> MAIS factor .)
+    MENOS           reduce using rule 9 (factor -> MAIS factor .)
+    ABRE_PAREN      reduce using rule 9 (factor -> MAIS factor .)
+    FECHA_PAREN     reduce using rule 9 (factor -> MAIS factor .)
+
+
+state 21
+
+    (1) expression -> MAIS term term .
+
+    $end            reduce using rule 1 (expression -> MAIS term term .)
+    FECHA_PAREN     reduce using rule 1 (expression -> MAIS term term .)
+
+
+state 22
+
+    (10) factor -> MENOS factor .
+
+    $end            reduce using rule 10 (factor -> MENOS factor .)
+    VEZES           reduce using rule 10 (factor -> MENOS factor .)
+    DIVIDIR         reduce using rule 10 (factor -> MENOS factor .)
+    NUMERO          reduce using rule 10 (factor -> MENOS factor .)
+    ID              reduce using rule 10 (factor -> MENOS factor .)
+    MAIS            reduce using rule 10 (factor -> MENOS factor .)
+    MENOS           reduce using rule 10 (factor -> MENOS factor .)
+    ABRE_PAREN      reduce using rule 10 (factor -> MENOS factor .)
+    FECHA_PAREN     reduce using rule 10 (factor -> MENOS factor .)
+
+
+state 23
+
+    (2) expression -> MENOS term term .
+
+    $end            reduce using rule 2 (expression -> MENOS term term .)
+    FECHA_PAREN     reduce using rule 2 (expression -> MENOS term term .)
+
+
+state 24
+
+    (4) term -> VEZES factor factor .
+
+    $end            reduce using rule 4 (term -> VEZES factor factor .)
+    VEZES           reduce using rule 4 (term -> VEZES factor factor .)
+    DIVIDIR         reduce using rule 4 (term -> VEZES factor factor .)
+    NUMERO          reduce using rule 4 (term -> VEZES factor factor .)
+    ID              reduce using rule 4 (term -> VEZES factor factor .)
+    MAIS            reduce using rule 4 (term -> VEZES factor factor .)
+    MENOS           reduce using rule 4 (term -> VEZES factor factor .)
+    ABRE_PAREN      reduce using rule 4 (term -> VEZES factor factor .)
+    FECHA_PAREN     reduce using rule 4 (term -> VEZES factor factor .)
+
+
+state 25
+
+    (5) term -> DIVIDIR factor factor .
+
+    $end            reduce using rule 5 (term -> DIVIDIR factor factor .)
+    VEZES           reduce using rule 5 (term -> DIVIDIR factor factor .)
+    DIVIDIR         reduce using rule 5 (term -> DIVIDIR factor factor .)
+    NUMERO          reduce using rule 5 (term -> DIVIDIR factor factor .)
+    ID              reduce using rule 5 (term -> DIVIDIR factor factor .)
+    MAIS            reduce using rule 5 (term -> DIVIDIR factor factor .)
+    MENOS           reduce using rule 5 (term -> DIVIDIR factor factor .)
+    ABRE_PAREN      reduce using rule 5 (term -> DIVIDIR factor factor .)
+    FECHA_PAREN     reduce using rule 5 (term -> DIVIDIR factor factor .)
+
+
+state 26
+
+    (11) factor -> ABRE_PAREN expression FECHA_PAREN .
+
+    $end            reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    VEZES           reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    DIVIDIR         reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    NUMERO          reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    ID              reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    MAIS            reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    MENOS           reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    ABRE_PAREN      reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
+    FECHA_PAREN     reduce using rule 11 (factor -> ABRE_PAREN expression FECHA_PAREN .)
 

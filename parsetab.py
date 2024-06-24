@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftMAISMENOSleftVEZESDIVIDIRABRE_PAREN DIVIDIR FECHA_PAREN ID MAIS MENOS NUMERO VEZESexpressao : IDexpressao : NUMEROexpressao : ABRE_PAREN MAIS expressao expressao FECHA_PARENexpressao : ABRE_PAREN MENOS expressao expressao FECHA_PARENexpressao : ABRE_PAREN VEZES expressao expressao FECHA_PARENexpressao : ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN'
+_lr_signature = 'leftMAISMENOSleftVEZESDIVIDIRABRE_PAREN DIVIDIR FECHA_PAREN ID MAIS MENOS NUMERO VEZES\n    expression : MAIS term term\n               | MENOS term term\n    \n    expression : term\n    \n    term : VEZES factor factor\n         | DIVIDIR factor factor\n    \n    term : factor\n    \n    factor : NUMERO\n    \n    factor : ID\n    \n    factor : MAIS factor\n           | MENOS factor\n    \n    factor : ABRE_PAREN expression FECHA_PAREN\n    '
     
-_lr_action_items = {'ID':([0,2,3,5,6,7,8,9,10,11,12,17,18,19,20,],[2,-1,-2,2,2,2,2,2,2,2,2,-3,-4,-5,-6,]),'NUMERO':([0,2,3,5,6,7,8,9,10,11,12,17,18,19,20,],[3,-1,-2,3,3,3,3,3,3,3,3,-3,-4,-5,-6,]),'ABRE_PAREN':([0,2,3,5,6,7,8,9,10,11,12,17,18,19,20,],[4,-1,-2,4,4,4,4,4,4,4,4,-3,-4,-5,-6,]),'$end':([1,2,3,17,18,19,20,],[0,-1,-2,-3,-4,-5,-6,]),'FECHA_PAREN':([2,3,13,14,15,16,17,18,19,20,],[-1,-2,17,18,19,20,-3,-4,-5,-6,]),'MAIS':([4,],[5,]),'MENOS':([4,],[6,]),'VEZES':([4,],[7,]),'DIVIDIR':([4,],[8,]),}
+_lr_action_items = {'MAIS':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[2,11,11,11,11,-7,-8,2,11,11,-6,11,11,-6,11,11,-9,-10,-4,-5,-11,]),'MENOS':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[4,14,14,14,14,-7,-8,4,14,14,-6,14,14,-6,14,14,-9,-10,-4,-5,-11,]),'VEZES':([0,2,4,8,9,10,12,13,15,16,20,22,24,25,26,],[5,5,5,-7,-8,5,5,-6,5,-6,-9,-10,-4,-5,-11,]),'DIVIDIR':([0,2,4,8,9,10,12,13,15,16,20,22,24,25,26,],[7,7,7,-7,-8,7,7,-6,7,-6,-9,-10,-4,-5,-11,]),'NUMERO':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[8,8,8,8,8,-7,-8,8,8,8,-6,8,8,-6,8,8,-9,-10,-4,-5,-11,]),'ID':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[9,9,9,9,9,-7,-8,9,9,9,-6,9,9,-6,9,9,-9,-10,-4,-5,-11,]),'ABRE_PAREN':([0,2,4,5,7,8,9,10,11,12,13,14,15,16,17,18,20,22,24,25,26,],[10,10,10,10,10,-7,-8,10,10,10,-6,10,10,-6,10,10,-9,-10,-4,-5,-11,]),'$end':([1,3,6,8,9,13,16,20,21,22,23,24,25,26,],[0,-3,-6,-7,-8,-9,-10,-9,-1,-10,-2,-4,-5,-11,]),'FECHA_PAREN':([3,6,8,9,13,16,19,20,21,22,23,24,25,26,],[-3,-6,-7,-8,-9,-10,26,-9,-1,-10,-2,-4,-5,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expressao':([0,5,6,7,8,9,10,11,12,],[1,9,10,11,12,13,14,15,16,]),}
+_lr_goto_items = {'expression':([0,10,],[1,19,]),'term':([0,2,4,10,12,15,],[3,12,15,3,21,23,]),'factor':([0,2,4,5,7,10,11,12,14,15,17,18,],[6,13,16,17,18,6,20,6,22,6,24,25,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,11 +26,16 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expressao","S'",1,None,None,None),
-  ('expressao -> ID','expressao',1,'p_expressao_id','trabalho.py',78),
-  ('expressao -> NUMERO','expressao',1,'p_expressao_numero','trabalho.py',83),
-  ('expressao -> ABRE_PAREN MAIS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_mais','trabalho.py',88),
-  ('expressao -> ABRE_PAREN MENOS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_menos','trabalho.py',93),
-  ('expressao -> ABRE_PAREN VEZES expressao expressao FECHA_PAREN','expressao',5,'p_expressao_vezes','trabalho.py',98),
-  ('expressao -> ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN','expressao',5,'p_expressao_dividir','trabalho.py',103),
+  ("S' -> expression","S'",1,None,None,None),
+  ('expression -> MAIS term term','expression',3,'p_expression','parser.py',78),
+  ('expression -> MENOS term term','expression',3,'p_expression','parser.py',79),
+  ('expression -> term','expression',1,'p_expression_term','parser.py',90),
+  ('term -> VEZES factor factor','term',3,'p_term','parser.py',96),
+  ('term -> DIVIDIR factor factor','term',3,'p_term','parser.py',97),
+  ('term -> factor','term',1,'p_term_factor','parser.py',103),
+  ('factor -> NUMERO','factor',1,'p_factor_number','parser.py',109),
+  ('factor -> ID','factor',1,'p_factor_id','parser.py',115),
+  ('factor -> MAIS factor','factor',2,'p_factor_unary','parser.py',121),
+  ('factor -> MENOS factor','factor',2,'p_factor_unary','parser.py',122),
+  ('factor -> ABRE_PAREN expression FECHA_PAREN','factor',3,'p_factor_grouped','parser.py',128),
 ]
