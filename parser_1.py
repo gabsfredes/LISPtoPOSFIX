@@ -60,7 +60,7 @@ def t_error(t):
     t.lexer.skip(1)  # Pula o caractere ilegal
 
 # Construir o lexer
-# lexer = lex.lex()
+lexer = lex.lex()
 # #imprimir tokens através do input
 # lexer.input("(* z (+x y))")
 # while True:
