@@ -27,10 +27,10 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expressao","S'",1,None,None,None),
-  ('expressao -> ID','expressao',1,'p_expressao_id','grammar.py',21),
-  ('expressao -> NUMERO','expressao',1,'p_expressao_numero','grammar.py',26),
-  ('expressao -> ABRE_PAREN MAIS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_mais','grammar.py',31),
-  ('expressao -> ABRE_PAREN MENOS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_menos','grammar.py',36),
-  ('expressao -> ABRE_PAREN VEZES expressao expressao FECHA_PAREN','expressao',5,'p_expressao_vezes','grammar.py',41),
-  ('expressao -> ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN','expressao',5,'p_expressao_dividir','grammar.py',46),
+  ('expressao -> ID','expressao',1,'p_expressao_id','trabalho.py',78),
+  ('expressao -> NUMERO','expressao',1,'p_expressao_numero','trabalho.py',83),
+  ('expressao -> ABRE_PAREN MAIS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_mais','trabalho.py',88),
+  ('expressao -> ABRE_PAREN MENOS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_menos','trabalho.py',93),
+  ('expressao -> ABRE_PAREN VEZES expressao expressao FECHA_PAREN','expressao',5,'p_expressao_vezes','trabalho.py',98),
+  ('expressao -> ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN','expressao',5,'p_expressao_dividir','trabalho.py',103),
 ]

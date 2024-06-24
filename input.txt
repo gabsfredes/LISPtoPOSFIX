@@ -1,1 +1,1 @@
-(/ (* z(+ x y)) 2) # XY+ Z* 2 /
+(* z (+x y)) # Esperado x y + z *
