@@ -1,12 +1,4 @@
 # Alfabeto = {id, n, +, −, ∗, /}
-# # Gramatica:
-# E → id
-# E → n
-# E → E E +
-# E → E E -
-# E → E E *
-# E → E E /
-
 
 import ply.lex as lex
 
@@ -70,16 +62,3 @@ def t_error(t):
 
 # Construir o lexer
 lexer = lex.lex()
-
-# Recebe input de arquivo txt e coloca no lexer.input
-arquivo = open("LISPtoPOSFIX/input.txt", "r")
-lexer.input(arquivo.read())
-arquivo.close()
-
-# Faz toneking do arquivo
-while True:
-    tok = lexer.token()  # tok é um objeto que contém informações sobre o token
-    if not tok:
-        break
-    print(tok.type, tok.value, tok.lineno, tok.lexpos)
-    # TIPO - VALOR - LINHA NO INPUT - POSIÇÃO NO INPUT (index)

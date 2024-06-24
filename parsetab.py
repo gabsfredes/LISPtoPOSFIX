@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ABRE_PAREN DIVIDIR FECHA_PAREN ID MAIS MENOS NUMERO VEZESexpressao : expressao MAIS termoexpressao : expressao MENOS termoexpressao : termotermo : termo VEZES fatortermo : termo DIVIDIR fatortermo : fatorfator : NUMEROfator : IDfator : ABRE_PAREN expressao FECHA_PAREN'
+_lr_signature = 'leftMAISMENOSleftVEZESDIVIDIRABRE_PAREN DIVIDIR FECHA_PAREN ID MAIS MENOS NUMERO VEZESexpressao : IDexpressao : NUMEROexpressao : ABRE_PAREN MAIS expressao expressao FECHA_PARENexpressao : ABRE_PAREN MENOS expressao expressao FECHA_PARENexpressao : ABRE_PAREN VEZES expressao expressao FECHA_PARENexpressao : ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN'
     
-_lr_action_items = {'NUMERO':([0,6,7,8,9,10,],[4,4,4,4,4,4,]),'ID':([0,6,7,8,9,10,],[5,5,5,5,5,5,]),'ABRE_PAREN':([0,6,7,8,9,10,],[6,6,6,6,6,6,]),'$end':([1,2,3,4,5,12,13,14,15,16,],[0,-3,-6,-7,-8,-1,-2,-4,-5,-9,]),'MAIS':([1,2,3,4,5,11,12,13,14,15,16,],[7,-3,-6,-7,-8,7,-1,-2,-4,-5,-9,]),'MENOS':([1,2,3,4,5,11,12,13,14,15,16,],[8,-3,-6,-7,-8,8,-1,-2,-4,-5,-9,]),'FECHA_PAREN':([2,3,4,5,11,12,13,14,15,16,],[-3,-6,-7,-8,16,-1,-2,-4,-5,-9,]),'VEZES':([2,3,4,5,12,13,14,15,16,],[9,-6,-7,-8,9,9,-4,-5,-9,]),'DIVIDIR':([2,3,4,5,12,13,14,15,16,],[10,-6,-7,-8,10,10,-4,-5,-9,]),}
+_lr_action_items = {'ID':([0,2,3,5,6,7,8,9,10,11,12,17,18,19,20,],[2,-1,-2,2,2,2,2,2,2,2,2,-3,-4,-5,-6,]),'NUMERO':([0,2,3,5,6,7,8,9,10,11,12,17,18,19,20,],[3,-1,-2,3,3,3,3,3,3,3,3,-3,-4,-5,-6,]),'ABRE_PAREN':([0,2,3,5,6,7,8,9,10,11,12,17,18,19,20,],[4,-1,-2,4,4,4,4,4,4,4,4,-3,-4,-5,-6,]),'$end':([1,2,3,17,18,19,20,],[0,-1,-2,-3,-4,-5,-6,]),'FECHA_PAREN':([2,3,13,14,15,16,17,18,19,20,],[-1,-2,17,18,19,20,-3,-4,-5,-6,]),'MAIS':([4,],[5,]),'MENOS':([4,],[6,]),'VEZES':([4,],[7,]),'DIVIDIR':([4,],[8,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expressao':([0,6,],[1,11,]),'termo':([0,6,7,8,],[2,2,12,13,]),'fator':([0,6,7,8,9,10,],[3,3,3,3,14,15,]),}
+_lr_goto_items = {'expressao':([0,5,6,7,8,9,10,11,12,],[1,9,10,11,12,13,14,15,16,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,13 +27,10 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expressao","S'",1,None,None,None),
-  ('expressao -> expressao MAIS termo','expressao',3,'p_expressao_mais','grammar.py',6),
-  ('expressao -> expressao MENOS termo','expressao',3,'p_expressao_menos','grammar.py',10),
-  ('expressao -> termo','expressao',1,'p_expressao_termo','grammar.py',14),
-  ('termo -> termo VEZES fator','termo',3,'p_termo_vezes','grammar.py',18),
-  ('termo -> termo DIVIDIR fator','termo',3,'p_termo_dividir','grammar.py',22),
-  ('termo -> fator','termo',1,'p_termo_fator','grammar.py',26),
-  ('fator -> NUMERO','fator',1,'p_fator_numero','grammar.py',30),
-  ('fator -> ID','fator',1,'p_fator_id','grammar.py',34),
-  ('fator -> ABRE_PAREN expressao FECHA_PAREN','fator',3,'p_fator_parenteses','grammar.py',38),
+  ('expressao -> ID','expressao',1,'p_expressao_id','grammar.py',21),
+  ('expressao -> NUMERO','expressao',1,'p_expressao_numero','grammar.py',26),
+  ('expressao -> ABRE_PAREN MAIS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_mais','grammar.py',31),
+  ('expressao -> ABRE_PAREN MENOS expressao expressao FECHA_PAREN','expressao',5,'p_expressao_menos','grammar.py',36),
+  ('expressao -> ABRE_PAREN VEZES expressao expressao FECHA_PAREN','expressao',5,'p_expressao_vezes','grammar.py',41),
+  ('expressao -> ABRE_PAREN DIVIDIR expressao expressao FECHA_PAREN','expressao',5,'p_expressao_dividir','grammar.py',46),
 ]
