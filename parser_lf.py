@@ -28,12 +28,12 @@ t_FECHA_PAREN = r"\)"
 # Função para tratar números
 def t_NUMERO(t):
     r"\d+"
-    t.value = int(t.value)
+    t.value = int(t.value) # Apenas números inteiros
     return t
 
 # Função para tratar ID
 def t_ID(t):
-    r"[a-zA-Z_][a-zA-Z0-9_]*" # Letra seguida de letras, números ou underline
+    r"[a-zA-Z]+"  # Apenas letras do alfabeto portugues
     return t
 
 # Ignorar espaços em branco
@@ -62,72 +62,102 @@ def t_error(t):
 # Construir o lexer
 lexer = lex.lex()
 
+####################
+#  Classes Tree    #
+####################
+####################
+# Não interferem   #
+# Na análise       #
+# É só para arvore #
+####################
+class ASTNode:
+    pass
+
+class BinaryOpNode(ASTNode):
+    def __init__(self, op, left, right):
+        self.op = op
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return f"({self.op} {self.left} {self.right})"
+
+class IdNode(ASTNode):
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return self.name
+
+class NumberNode(ASTNode):
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return str(self.value)
+    
+def print_tree(node, indent="", is_right=False):
+    if isinstance(node, BinaryOpNode):
+        op_str = f"{indent}{'└─' if is_right else '├─'}{node.op}"
+        print(op_str)
+        new_indent = indent + ("   " if is_right else "│  ")
+        print_tree(node.left, new_indent, False)
+        print_tree(node.right, new_indent, True)
+    elif isinstance(node, IdNode) or isinstance(node, NumberNode):
+        node_str = f"{indent}{'└─' if is_right else '├─'}{node}"
+        print(node_str)
+        
+def to_postfix_expression(node):
+    if isinstance(node, BinaryOpNode):
+        left_expr = to_postfix_expression(node.left)
+        right_expr = to_postfix_expression(node.right)
+        return f"{left_expr} {right_expr} {node.op}"
+    elif isinstance(node, IdNode):
+        return node.name
+    elif isinstance(node, NumberNode):
+        return str(node.value)
+
 ##################
 # --- Parser --- #
 ##################
 
-# Nó da árvore sintática abstrata (AST)
-# Cada nó é uma tupla com a seguinte estrutura:
-# ('tipo', conteúdo1, conteúdo2, ..., conteúdoN)
-class Node:
-    def __init__(self, value, children=None):
-        self.value = value
-        self.children = children if children else []
-
-    def add_child(self, child):
-        self.children.append(child)
-
-# Write functions for each grammar rule which is
+# Regras de produção
 
 def p_E_plus(p):
     'E : ABRE_PAREN MAIS E E FECHA_PAREN'
-    p[0] = ('+', p[3], p[4])
+    p[0] = BinaryOpNode('+', p[3], p[4])
 
 def p_E_minus(p):
     'E : ABRE_PAREN MENOS E E FECHA_PAREN'
-    p[0] = ('-', p[3], p[4])
+    p[0] = BinaryOpNode('-', p[3], p[4])
 
 def p_E_times(p):
     'E : ABRE_PAREN VEZES E E FECHA_PAREN'
-    p[0] = ('*', p[3], p[4])
+    p[0] = BinaryOpNode('*', p[3], p[4])
 
 def p_E_divide(p):
     'E : ABRE_PAREN DIVIDIR E E FECHA_PAREN'
-    p[0] = ('/', p[3], p[4])
+    p[0] = BinaryOpNode('/', p[3], p[4])
 
 def p_E_id(p):
     'E : ID'
-    p[0] = ('id', p[1])
+    p[0] = IdNode(p[1])
 
 def p_E_number(p):
     'E : NUMERO'
-    p[0] = ('numero', p[1])
+    p[0] = NumberNode(p[1])
 
 def p_error(p):
     print(f'Erro de sintaxe: {p.value!r}')
 
-# Build the parser
+# Construir o parser
 parser = yacc.yacc()
 
-# Parse an expression
-<<<<<<< Updated upstream
-ast = parser.parse('( * z ( + x y ) ) ')
-=======
-ast = parser.parse('(/ (* z(+ x y)) 2)')
->>>>>>> Stashed changes
-print(ast)
+# Função para analisar a entrada
+arquivo = open('input.txt', 'r')
+entrada = arquivo.read()
+arquivo.close()
 
-def postfix_expression(node):
-    if isinstance(node, tuple):
-        if node[0] == 'op_binaria':
-            left_expr = postfix_expression(node[3])
-            right_expr = postfix_expression(node[1])
-            return f'{left_expr} {right_expr} {node[2]}'
-        elif node[0] == 'numero' or node[0] == 'id':
-            return str(node[1])
-    else:
-        # Trata casos não cobertos, como números e identificadores diretamente
-        return str(node)
-
-posfixa = postfix_expression(ast)
-print("\nExpressao em notacao posfixa: %s" % posfixa)
+ast = parser.parse(entrada)
+print_tree(ast)
+print(to_postfix_expression(ast))
