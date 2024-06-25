@@ -66,70 +66,42 @@ lexer = lex.lex()
 # --- Parser --- #
 ##################
 
+# Nó da árvore sintática abstrata (AST)
+# Cada nó é uma tupla com a seguinte estrutura:
+# ('tipo', conteúdo1, conteúdo2, ..., conteúdoN)
+class Node:
+    def __init__(self, value, children=None):
+        self.value = value
+        self.children = children if children else []
+
+    def add_child(self, child):
+        self.children.append(child)
+
 # Write functions for each grammar rule which is
-# specified in the docstring.
-precedence = (
-    ("left", "MAIS", "MENOS"),
-    ("left", "VEZES", "DIVIDIR"),
-)
 
+def p_E_plus(p):
+    'E : ABRE_PAREN MAIS E E FECHA_PAREN'
+    p[0] = ('+', p[3], p[4])
 
-def p_expression(p):
-    '''
-    expression : MAIS term term
-               | MENOS term term
-    '''
-    # p is a sequence that represents rule contents.
-    #
-    # expression : term PLUS term
-    #   p[0]     : p[1] p[2] p[3]
-    # 
-    p[0] = ('op_binaria', p[2], p[1], p[3])
+def p_E_minus(p):
+    'E : ABRE_PAREN MENOS E E FECHA_PAREN'
+    p[0] = ('-', p[3], p[4])
 
-def p_expression_term(p):
-    '''
-    expression : term
-    '''
-    p[0] = p[1]
+def p_E_times(p):
+    'E : ABRE_PAREN VEZES E E FECHA_PAREN'
+    p[0] = ('*', p[3], p[4])
 
-def p_term(p):
-    '''
-    term : VEZES factor factor
-         | DIVIDIR factor factor
-    '''
-    p[0] = ('op_binaria', p[2], p[1], p[3])
+def p_E_divide(p):
+    'E : ABRE_PAREN DIVIDIR E E FECHA_PAREN'
+    p[0] = ('/', p[3], p[4])
 
-def p_term_factor(p):
-    '''
-    term : factor
-    '''
-    p[0] = p[1]
-
-def p_factor_number(p):
-    '''
-    factor : NUMERO
-    '''
-    p[0] = ('numero', p[1])
-
-def p_factor_id(p):
-    '''
-    factor : ID
-    '''
+def p_E_id(p):
+    'E : ID'
     p[0] = ('id', p[1])
 
-def p_factor_unary(p):
-    '''
-    factor : MAIS factor
-           | MENOS factor
-    '''
-    p[0] = ('unario', p[1], p[2])
-
-def p_factor_grouped(p):
-    '''
-    factor : ABRE_PAREN expression FECHA_PAREN
-    '''
-    # p[0] = ('grupo', p[2])
-    p[0] = p[2]
+def p_E_number(p):
+    'E : NUMERO'
+    p[0] = ('numero', p[1])
 
 def p_error(p):
     print(f'Erro de sintaxe: {p.value!r}')
@@ -138,7 +110,11 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Parse an expression
+<<<<<<< Updated upstream
 ast = parser.parse('( * z ( + x y ) ) ')
+=======
+ast = parser.parse('(/ (* z(+ x y)) 2)')
+>>>>>>> Stashed changes
 print(ast)
 
 def postfix_expression(node):
@@ -154,4 +130,4 @@ def postfix_expression(node):
         return str(node)
 
 posfixa = postfix_expression(ast)
-print("\nExpressão em notação posfixa: %s" % posfixa)
+print("\nExpressao em notacao posfixa: %s" % posfixa)
