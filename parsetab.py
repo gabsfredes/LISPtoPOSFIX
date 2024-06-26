@@ -27,10 +27,10 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> E","S'",1,None,None,None),
-  ('E -> ABRE_PAREN MAIS E E FECHA_PAREN','E',5,'p_E_plus','parser_lf.py',83),
-  ('E -> ABRE_PAREN MENOS E E FECHA_PAREN','E',5,'p_E_minus','parser_lf.py',87),
-  ('E -> ABRE_PAREN VEZES E E FECHA_PAREN','E',5,'p_E_times','parser_lf.py',91),
-  ('E -> ABRE_PAREN DIVIDIR E E FECHA_PAREN','E',5,'p_E_divide','parser_lf.py',95),
-  ('E -> ID','E',1,'p_E_id','parser_lf.py',99),
-  ('E -> NUMERO','E',1,'p_E_number','parser_lf.py',103),
+  ('E -> ABRE_PAREN MAIS E E FECHA_PAREN','E',5,'p_E_mais','parser_lf.py',126),
+  ('E -> ABRE_PAREN MENOS E E FECHA_PAREN','E',5,'p_E_menos','parser_lf.py',130),
+  ('E -> ABRE_PAREN VEZES E E FECHA_PAREN','E',5,'p_E_vezes','parser_lf.py',134),
+  ('E -> ABRE_PAREN DIVIDIR E E FECHA_PAREN','E',5,'p_E_dividir','parser_lf.py',138),
+  ('E -> ID','E',1,'p_E_id','parser_lf.py',142),
+  ('E -> NUMERO','E',1,'p_E_numero','parser_lf.py',146),
 ]

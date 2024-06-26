@@ -122,20 +122,19 @@ def to_postfix_expression(node):
 ##################
 
 # Regras de produção
-
-def p_E_plus(p):
+def p_E_mais(p):
     'E : ABRE_PAREN MAIS E E FECHA_PAREN'
     p[0] = BinaryOpNode('+', p[3], p[4])
 
-def p_E_minus(p):
+def p_E_menos(p):
     'E : ABRE_PAREN MENOS E E FECHA_PAREN'
     p[0] = BinaryOpNode('-', p[3], p[4])
 
-def p_E_times(p):
+def p_E_vezes(p):
     'E : ABRE_PAREN VEZES E E FECHA_PAREN'
     p[0] = BinaryOpNode('*', p[3], p[4])
 
-def p_E_divide(p):
+def p_E_dividir(p):
     'E : ABRE_PAREN DIVIDIR E E FECHA_PAREN'
     p[0] = BinaryOpNode('/', p[3], p[4])
 
@@ -143,7 +142,7 @@ def p_E_id(p):
     'E : ID'
     p[0] = IdNode(p[1])
 
-def p_E_number(p):
+def p_E_numero(p):
     'E : NUMERO'
     p[0] = NumberNode(p[1])
 
@@ -153,11 +152,14 @@ def p_error(p):
 # Construir o parser
 parser = yacc.yacc()
 
-# Função para analisar a entrada
+# Função para analisar a entrada do arquivo input.txt
 arquivo = open('input.txt', 'r')
 entrada = arquivo.read()
 arquivo.close()
 
+# Chama o parser para entrada lida 
 ast = parser.parse(entrada)
+# Imprime a árvore
 print_tree(ast)
+# Imprime a expressão pós-fixa
 print(to_postfix_expression(ast))
