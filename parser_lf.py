@@ -107,11 +107,11 @@ def print_tree(node, indent="", is_right=False):
         node_str = f"{indent}{'└─' if is_right else '├─'}{node}"
         print(node_str)
         
-def to_postfix_expression(node):
+def tradutor_toposfix(node):
     if isinstance(node, BinaryOpNode):
-        left_expr = to_postfix_expression(node.left)
-        right_expr = to_postfix_expression(node.right)
-        return f"{left_expr} {right_expr} {node.op}"
+        left_expr = tradutor_toposfix(node.left)
+        right_expr = tradutor_toposfix(node.right)
+        return f"{right_expr} {left_expr} {node.op}"
     elif isinstance(node, IdNode):
         return node.name
     elif isinstance(node, NumberNode):
@@ -137,7 +137,7 @@ def p_E_vezes(p):
 def p_E_dividir(p):
     'E : ABRE_PAREN DIVIDIR E E FECHA_PAREN'
     p[0] = BinaryOpNode('/', p[3], p[4])
-
+    
 def p_E_id(p):
     'E : ID'
     p[0] = IdNode(p[1])
@@ -159,7 +159,9 @@ arquivo.close()
 
 # Chama o parser para entrada lida 
 ast = parser.parse(entrada)
+print("Entrada: %s\nÁrvore:" % ast)
 # Imprime a árvore
 print_tree(ast)
 # Imprime a expressão pós-fixa
-print(to_postfix_expression(ast))
+print("Pósfixada: %s" % tradutor_toposfix(ast))
+
