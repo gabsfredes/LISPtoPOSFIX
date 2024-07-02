@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ABRE_PAREN DIVIDIR FECHA_PAREN ID MAIS MENOS NUMERO VEZESE : ABRE_PAREN MAIS E E FECHA_PARENE : ABRE_PAREN MENOS E E FECHA_PARENE : ABRE_PAREN VEZES E E FECHA_PARENE : ABRE_PAREN DIVIDIR E E FECHA_PARENE : IDE : NUMERO'
+_lr_signature = 'ABRE_PAREN DIVIDIR FECHA_PAREN ID MAIS MENOS NUMERO VEZESE : ABRE_PAREN MAIS E E FECHA_PAREN\n         | ABRE_PAREN MENOS E E FECHA_PAREN\n         | ABRE_PAREN VEZES E E FECHA_PAREN\n         | ABRE_PAREN DIVIDIR E E FECHA_PARENE : IDE : NUMERO'
     
 _lr_action_items = {'ABRE_PAREN':([0,3,4,5,6,7,8,9,10,11,12,17,18,19,20,],[2,-5,-6,2,2,2,2,2,2,2,2,-1,-2,-3,-4,]),'ID':([0,3,4,5,6,7,8,9,10,11,12,17,18,19,20,],[3,-5,-6,3,3,3,3,3,3,3,3,-1,-2,-3,-4,]),'NUMERO':([0,3,4,5,6,7,8,9,10,11,12,17,18,19,20,],[4,-5,-6,4,4,4,4,4,4,4,4,-1,-2,-3,-4,]),'$end':([1,3,4,17,18,19,20,],[0,-5,-6,-1,-2,-3,-4,]),'MAIS':([2,],[5,]),'MENOS':([2,],[6,]),'VEZES':([2,],[7,]),'DIVIDIR':([2,],[8,]),'FECHA_PAREN':([3,4,13,14,15,16,17,18,19,20,],[-5,-6,17,18,19,20,-1,-2,-3,-4,]),}
 
@@ -27,10 +27,10 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> E","S'",1,None,None,None),
-  ('E -> ABRE_PAREN MAIS E E FECHA_PAREN','E',5,'p_E_mais','parser_lf.py',126),
-  ('E -> ABRE_PAREN MENOS E E FECHA_PAREN','E',5,'p_E_menos','parser_lf.py',130),
-  ('E -> ABRE_PAREN VEZES E E FECHA_PAREN','E',5,'p_E_vezes','parser_lf.py',134),
-  ('E -> ABRE_PAREN DIVIDIR E E FECHA_PAREN','E',5,'p_E_dividir','parser_lf.py',138),
-  ('E -> ID','E',1,'p_E_id','parser_lf.py',142),
-  ('E -> NUMERO','E',1,'p_E_numero','parser_lf.py',146),
+  ('E -> ABRE_PAREN MAIS E E FECHA_PAREN','E',5,'p_E_binop','parser_lf.py',126),
+  ('E -> ABRE_PAREN MENOS E E FECHA_PAREN','E',5,'p_E_binop','parser_lf.py',127),
+  ('E -> ABRE_PAREN VEZES E E FECHA_PAREN','E',5,'p_E_binop','parser_lf.py',128),
+  ('E -> ABRE_PAREN DIVIDIR E E FECHA_PAREN','E',5,'p_E_binop','parser_lf.py',129),
+  ('E -> ID','E',1,'p_E_id','parser_lf.py',133),
+  ('E -> NUMERO','E',1,'p_E_numero','parser_lf.py',137),
 ]

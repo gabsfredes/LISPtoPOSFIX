@@ -27,13 +27,13 @@ t_FECHA_PAREN = r"\)"
 
 # Função para tratar números
 def t_NUMERO(t):
-    r"\d+"
-    t.value = int(t.value) # Apenas números inteiros
+    r'-?\d+(\.\d+)?'
+    t.value = float(t.value) # Considera positivo ou negativo e float
     return t
 
 # Função para tratar ID
 def t_ID(t):
-    r"[a-zA-Z]+"  # Apenas letras do alfabeto portugues
+    r"-?[a-zA-Z]+"  # Apenas letras do alfabeto portugues (podendo ser negativo)
     return t
 
 # Ignorar espaços em branco
@@ -111,7 +111,7 @@ def tradutor_toposfix(node):
     if isinstance(node, BinaryOpNode):
         left_expr = tradutor_toposfix(node.left)
         right_expr = tradutor_toposfix(node.right)
-        return f"{right_expr} {left_expr} {node.op}"
+        return f"{left_expr} {right_expr} {node.op}"
     elif isinstance(node, IdNode):
         return node.name
     elif isinstance(node, NumberNode):
@@ -122,22 +122,13 @@ def tradutor_toposfix(node):
 ##################
 
 # Regras de produção
-def p_E_mais(p):
-    'E : ABRE_PAREN MAIS E E FECHA_PAREN'
-    p[0] = BinaryOpNode('+', p[3], p[4])
+def p_E_binop(p):
+    '''E : ABRE_PAREN MAIS E E FECHA_PAREN
+         | ABRE_PAREN MENOS E E FECHA_PAREN
+         | ABRE_PAREN VEZES E E FECHA_PAREN
+         | ABRE_PAREN DIVIDIR E E FECHA_PAREN'''
+    p[0] = BinaryOpNode(p[2], p[3], p[4])
 
-def p_E_menos(p):
-    'E : ABRE_PAREN MENOS E E FECHA_PAREN'
-    p[0] = BinaryOpNode('-', p[3], p[4])
-
-def p_E_vezes(p):
-    'E : ABRE_PAREN VEZES E E FECHA_PAREN'
-    p[0] = BinaryOpNode('*', p[3], p[4])
-
-def p_E_dividir(p):
-    'E : ABRE_PAREN DIVIDIR E E FECHA_PAREN'
-    p[0] = BinaryOpNode('/', p[3], p[4])
-    
 def p_E_id(p):
     'E : ID'
     p[0] = IdNode(p[1])
@@ -153,7 +144,7 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Função para analisar a entrada do arquivo input.txt
-arquivo = open('input.txt', 'r')
+arquivo = open('LISPtoPOSFIX/input.txt', 'r')
 entrada = arquivo.read()
 arquivo.close()
 
